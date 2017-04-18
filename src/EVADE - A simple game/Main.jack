@@ -1,0 +1,69 @@
+class Main
+{
+	function void main()
+	{
+		var Player player;
+		var Road road;
+		var Hole hole;
+		var char ch;
+		
+		
+		let player = Player.new();
+		let road = Road.new(200);
+		let hole = Hole.new(200);
+		
+		do Output.printString("Press right arrow to start the game");
+		while(~(Keyboard.keyPressed() =   132))
+		{
+		}
+		
+		do Screen.clearScreen();
+		
+		while(true)
+		{
+			do road.refresh();
+			do hole.refresh();
+			if(hole.playerInHole(player.getx(),player.gety()))
+			{
+				do Screen.clearScreen();
+				do Output.println();
+				do Output.printString("			GAME OVER");
+				do Output.println();
+				do Output.printString("			POINTS: ");
+				do Output.printInt(hole.getPoints());
+				
+				do Sys.halt();
+			}
+			do Output.moveCursor(0,0);
+			do Output.printInt(hole.getPoints());
+			let ch = Keyboard.keyPressed();
+			if((ch = 130)&(road.playerCanMoveLeft(player.getx(),player.gety(),player.getr())))
+			{
+				do player.moveLeft();
+			}
+			else
+			{
+				if((ch = 131)&(player.canMoveUp()))
+				{
+					do player.moveUp();
+				}
+				else
+				{
+					if((ch = 132)&(road.playerCanMoveRight(player.getx(),player.gety(),player.getr())))
+					{
+						do player.moveRight();
+					}
+					else
+					{
+						if((ch = 133)&(player.canMoveDown()))
+						{
+							do player.moveDown();
+						}
+					}
+				}
+			}
+		}
+	return;
+	}
+}
+			

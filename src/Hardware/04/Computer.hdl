@@ -1,0 +1,11 @@
+CHIP Computer {
+
+    IN reset;
+
+    PARTS:
+
+	CPU(inM=RAMout,instruction=ROMout,reset=reset,outM=RAMin,writeM=RAMload,addressM=RAMaddr,pc=ROMaddr);
+	Memory(in=RAMin,address=RAMaddr,load=RAMload,out=RAMout);
+	ROM32K(address=ROMaddr,out=ROMout);
+
+}

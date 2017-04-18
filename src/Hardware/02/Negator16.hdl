@@ -1,0 +1,13 @@
+//Negator 16. Outputs 2's compliment of input.
+
+CHIP Negator16 {
+	
+	IN in[16];
+	OUT out[16];
+
+	PARTS:
+		
+		Not16(in=in,out=out);
+		//Inc16(in=x,out=out);
+
+}

@@ -1,0 +1,13 @@
+//Or 3 way. Takes inputs a,b,c and outputs a+b+c
+
+CHIP Or3Way {
+
+IN a,b,c;
+OUT out;
+
+PARTS:
+	Or(a=a,b=b,out=aplusb);
+	Or(a=aplusb,b=c,out=out);
+
+}
+

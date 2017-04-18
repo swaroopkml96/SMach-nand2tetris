@@ -1,0 +1,64 @@
+// Implementation: the ALU logic manipulates the x and y inputs
+// and operates on the resulting values, as follows:
+// if (zx == 1) set x = 0        // 16-bit constant
+// if (nx == 1) set x = !x       // bitwise not
+// if (zy == 1) set y = 0        // 16-bit constant
+// if (ny == 1) set y = !y       // bitwise not
+// if (f == 1)  set out = x + y  // integer 2's complement addition
+// if (f == 0)  set out = x & y  // bitwise and
+// if (no == 1) set out = !out   // bitwise not
+// if (out == 0) set zr = 1
+// if (out < 0) set ng = 1
+
+CHIP ALU {
+    IN  
+        x[16], y[16],  // 16-bit inputs        
+        zx, // zero the x input?
+        nx, // negate the x input?
+        zy, // zero the y input?
+        ny, // negate the y input?
+        f,  // compute out = x + y (if 1) or x & y (if 0)
+        no; // negate the out output?
+
+    OUT 
+        out[16], // 16-bit output
+        zr, // 1 if (out == 0), 0 otherwise
+        ng; // 1 if (out < 0),  0 otherwise
+
+    PARTS:
+
+	//1. Mux chooses between 0 and x based on zx. Mux chooses between 0 and y based on zy.
+	//2. DMux branches (zeroed)x to negator based on nx. Or16 of the DMux outputs is final x. Similar for y.
+	//3. Final x is branched to Adder/And16 based on f. Similarly for y.
+	//4. Mux outputs And(x,y) or Adder(x,y) based on f.
+	//5. Output and 0 are passed through Equal? chip. Output is used to set zr.
+	//6. Out[15] is ng.
+
+	Mux16(a=x,b[0..15]=false,sel=zx,out=zeroedX);
+	Mux16(a=y,b[0..15]=false,sel=zy,out=zeroedY);
+	DMux16(in=zeroedX,sel=nx,a=notNegatedX,b=toBeNegatedX);
+	DMux16(in=zeroedY,sel=ny,a=notNegatedY,b=toBeNegatedY);
+	Negator16(in=toBeNegatedX,out=negatedX);
+	Negator16(in=toBeNegatedY,out=negatedY);
+	//Or16(a=notNegatedX,b=negatedX,out=finalX);
+	//Or16(a=notNegatedY,b=negatedY,out=finalY);
+	//Negator16(in=zeroedX,out=negatedX);
+	//Negator16(in=zeroedY,out=negatedY);
+	Mux16(a=notNegatedX,b=negatedX,sel=nx,out=finalX);
+	Mux16(a=notNegatedY,b=negatedY,sel=ny,out=finalY);
+	DMux16(in=finalX,sel=f,a=AndX,b=AddX);
+	DMux16(in=finalY,sel=f,a=AndY,b=AddY);
+	And16(a=AndX,b=AndY,out=AndXY);
+	Add16(a=AddX,b=AddY,out=AddXY);
+	Mux16(a=AndXY,b=AddXY,sel=f,out=tempOut);
+	DMux16(in=tempOut,sel=no,a=notNegatedOut,b=toBeNegatedOut);
+	Negator16(in=toBeNegatedOut,out=negatedOut);
+	//Or16(a=notNegatedOut,b=negatedOut,out=tempOut2);
+	Mux16(a=notNegatedOut,b=negatedOut,sel=no,out=tempOut2);
+	Equal16(a=tempOut2,b[0..15]=false,out=zr);
+	IsNegative(in=tempOut2,out=ng);
+	Identity16(in=tempOut2,out=out);
+
+}
+
+

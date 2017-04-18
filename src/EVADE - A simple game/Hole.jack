@@ -1,0 +1,90 @@
+class Hole
+{
+	field Ball b;
+	field int holeRadius;
+	field int widthOfRoad;
+	field int randIndex;
+	field String rand;
+	field int points;
+	field int smoothingFactor;
+	
+	constructor Hole new(int w)
+	{
+		let rand = "QWERTYUIOPASDFGHJKLZXCVBNM";
+		let randIndex = 0;
+		let points = 0;
+		let holeRadius = 30;
+		let smoothingFactor = 20;
+		let widthOfRoad = w;
+		let b = Ball.new(256-(widthOfRoad/4),holeRadius,holeRadius);
+		do b.setSmoothingFactor(smoothingFactor);
+		return this;
+	}
+	
+	method boolean playerInHole(int px, int py)
+	{
+		
+		var int xpos;
+		var int ypos;
+		let xpos = b.getx();
+		let ypos = b.gety();
+		if(((px>(xpos-holeRadius))&(px<(xpos+holeRadius)))&((py>(ypos-holeRadius))&(py<(ypos+holeRadius))))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+		//return false;
+		
+	}
+	
+	method void refresh()
+	{
+		
+		
+	
+		if(b.gety()<(255-holeRadius))
+		{
+			do b.moveDown();
+			
+		}
+		else
+		{
+			let points = points + 1;
+			if(smoothingFactor>5)
+			{
+				let smoothingFactor = smoothingFactor - 1;
+			}
+			do b.clearBall();
+			let b = Ball.new(256-(widthOfRoad/2)+holeRadius+((getRand()/10)*((widthOfRoad/10)-(2*holeRadius/10))),holeRadius,holeRadius);
+			//let b = Ball.new(246,holeRadius,holeRadius);
+			do b.setSmoothingFactor(smoothingFactor);
+			do b.moveDown();
+		}
+		return;
+	}
+	
+	method int getPoints()
+	{
+		return points;
+	}
+	
+	method int getRand()
+	{
+		var int random;
+		if(randIndex>(rand.length()-1))
+		{
+			let randIndex=0;
+		}
+		let random = (rand.charAt(randIndex)-65)*4;
+		let randIndex = randIndex+1;
+		return random;
+		
+	}
+}
+	
+		
+			

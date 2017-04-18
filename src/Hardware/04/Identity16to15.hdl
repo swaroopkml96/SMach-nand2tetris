@@ -1,0 +1,13 @@
+//Outputs the input
+
+CHIP Identity16to15 {
+
+	IN in[16];
+	OUT out[15];
+
+	PARTS:
+		
+		Not15(in=in[0..14],out=x);
+		Not15(in=x,out=out);
+
+}

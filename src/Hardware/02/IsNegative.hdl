@@ -1,0 +1,14 @@
+//IsNegative. Outputs the MSB of the input.
+//Can be used to determine if input number is negative.
+
+CHIP IsNegative {
+
+	IN in[16];
+	OUT out;
+	
+	PARTS:
+		
+		Not(in=in[15],out=x);
+		Not(in=x,out=out);
+
+}

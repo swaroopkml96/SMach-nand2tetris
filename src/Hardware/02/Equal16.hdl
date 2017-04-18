@@ -1,0 +1,27 @@
+//Equal16. Outputs 1 if both inputs are equal. Else outputs 0.
+
+CHIP Equal16 {
+	
+	IN a[16],b[16];
+	OUT out;
+	
+	PARTS:
+		Equal(a=a[0],b=b[0],out=r0);
+		Equal(a=a[1],b=b[1],out=r1);
+		Equal(a=a[2],b=b[2],out=r2);
+		Equal(a=a[3],b=b[3],out=r3);
+		Equal(a=a[4],b=b[4],out=r4);
+		Equal(a=a[5],b=b[5],out=r5);
+		Equal(a=a[6],b=b[6],out=r6);
+		Equal(a=a[7],b=b[7],out=r7);
+		Equal(a=a[8],b=b[8],out=r8);
+		Equal(a=a[9],b=b[9],out=r9);
+		Equal(a=a[10],b=b[10],out=r10);
+		Equal(a=a[11],b=b[11],out=r11);
+		Equal(a=a[12],b=b[12],out=r12);
+		Equal(a=a[13],b=b[13],out=r13);
+		Equal(a=a[14],b=b[14],out=r14);
+		Equal(a=a[15],b=b[15],out=r15);
+		And16Way(a=r0,b=r1,c=r2,d=r3,e=r4,f=r5,g=r6,h=r7,i=r8,j=r9,k=r10,l=r11,m=r12,n=r13,o=r14,p=r15,out=out);
+
+}

@@ -1,0 +1,156 @@
+class Ball
+{
+	field int xpos;
+	field int ypos;
+	field int radius;
+	
+	field int upCounter,downCounter,leftCounter,rightCounter,smoothingFactor,radius;
+	
+	
+	constructor Ball new(int x, int y, int r)
+	{
+		let xpos = x;
+		let ypos = y;
+		let upCounter=0;
+		let downCounter=0;
+		let leftCounter=0;
+		let rightCounter=0;
+		let smoothingFactor=5;
+		let radius=r;
+		return this;
+	}
+	
+	method void moveUp()
+	{
+		let upCounter = upCounter+1;
+		if(upCounter>smoothingFactor)
+		{
+			do clearBall();
+			let ypos = ypos - 1;
+			do update();
+			let upCounter=0;
+		}
+		return;
+		
+	}
+	
+	method void moveDown()
+	{
+		let downCounter = downCounter+1;
+		if(downCounter>smoothingFactor)
+		{
+			do clearBall();
+			let ypos = ypos + 1;
+			do update();
+			let downCounter = 0;
+		}	
+		return;
+			
+	}
+	
+	method void moveLeft()
+	{
+		let leftCounter = leftCounter+1;
+		if(leftCounter>smoothingFactor)
+		{
+			do clearBall();
+			let xpos = xpos - 1;
+			do update();
+			let leftCounter = 0;
+		}
+		return;
+	}
+	
+	method void moveRight()
+	{
+		let rightCounter = rightCounter+1;
+		if(rightCounter>smoothingFactor)
+		{
+			do clearBall();
+			let xpos = xpos + 1;
+			do update();
+			let rightCounter = 0;
+		}
+		return;
+	}
+	
+	method void update()
+	{
+		do Screen.setColor(true);
+		do Screen.drawCircle(xpos,ypos,radius);
+		return;
+	}
+	
+	method void clearBall()
+	{
+		do Screen.setColor(false);
+		do Screen.drawCircle(xpos,ypos,radius);
+		return;
+	}
+	
+	method boolean canMoveUp()
+	{
+		if((ypos-radius)>0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	method boolean canMoveDown()
+	{
+		if((ypos+radius)<255)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	method boolean canMoveLeft()
+	{
+		if((xpos-radius)>0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	method boolean canMoveRight()
+	{
+		if((xpos+radius)<511)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	method int getx()
+	{
+		return xpos;
+	}
+	
+	method int gety()
+	{
+		return ypos;
+	}
+
+	method void setSmoothingFactor(int s)
+	{
+		let smoothingFactor = s;
+		return;
+	}
+
+}
+

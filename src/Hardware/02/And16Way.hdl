@@ -1,0 +1,20 @@
+//And16Way. Takes 16 bit input and outputs And of all elements.
+
+CHIP And16Way {
+
+	IN a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p;
+	OUT out;
+
+	PARTS:
+		
+		And3Way(a=a,b=b,c=c,out=out0);
+		And3Way(a=d,b=e,c=f,out=out1);
+		And3Way(a=g,b=h,c=i,out=out2);
+		And3Way(a=j,b=k,c=l,out=out3);
+		And3Way(a=m,b=n,c=o,out=out4);
+		And3Way(a=p,b=true,c=true,out=out5);
+		And3Way(a=out0,b=out1,c=out2,out=x);
+		And3Way(a=out3,b=out4,c=out5,out=y);
+		And(a=x,b=y,out=out);
+
+}

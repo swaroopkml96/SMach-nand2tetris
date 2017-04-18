@@ -1,0 +1,13 @@
+//Identity. Outputs the input.
+
+CHIP Identity {
+	
+	IN in;
+	OUT out;
+	
+	PARTS:
+		
+		Not(in=in,out=x);
+		Not(in=x,out=out);
+
+}

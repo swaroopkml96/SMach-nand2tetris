@@ -1,0 +1,61 @@
+class Player
+{
+	field Ball p;
+	field int playerRadius;
+	
+	constructor Player new()
+	{
+		let playerRadius = 15;
+		let p = Ball.new(256,255-playerRadius,playerRadius);
+		return this;
+	}
+	
+	method int getx()
+	{
+		return p.getx();
+	}
+	
+	method int gety()
+	{
+		return p.gety();
+	}
+	
+	method int getr()
+	{
+		return playerRadius;
+	}
+	
+	method boolean canMoveUp()
+	{
+		return p.canMoveUp();
+	}
+	
+	method boolean canMoveDown()
+	{
+		return p.canMoveDown();
+	}
+	
+	method void moveUp()
+	{
+		do p.moveUp();
+		return;
+	}
+	
+	method void moveDown()
+	{
+		do p.moveDown();
+		return;
+	}
+	
+	method void moveRight()
+	{
+		do p.moveRight();
+		return;
+	}
+	
+	method void moveLeft()
+	{
+		do p.moveLeft();
+		return;
+	}
+}

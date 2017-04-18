@@ -1,0 +1,12 @@
+CHIP Or {
+    IN a, b;
+    OUT out;
+
+    PARTS:
+	
+	// ~(~a.~b)=~(~a)+~(~b)=a+b
+	Not(in=a,out=abar);
+	Not(in=b,out=bbar);
+	And(a=abar,b=bbar,out=x);
+	Not(in=x,out=out);
+}

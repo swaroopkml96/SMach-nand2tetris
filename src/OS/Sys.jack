@@ -1,0 +1,91 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Sys.jack
+
+/**
+ * A library that supports various program execution services.
+ */
+class Sys {
+
+    /** Performs all the initializations required by the OS. */
+    function void init() {
+    
+		do Math.init();
+		do Output.init();
+		do Screen.init();
+		do Keyboard.init();
+		do Memory.init();
+		do Main.main();
+		do Sys.halt();
+		return;
+    
+    }
+
+    /** Halts the program execution. */
+    function void halt() {
+    
+		while(true) {  }		// Infinite loop
+		return;
+    
+    }
+
+    /** Waits approximately duration milliseconds and returns.  */
+    function void wait(int duration) {
+    
+		var int n1,n2,n3,n4,n5,n6,n7,n8,n9,t;
+		let n1 = 32767;
+		let n2 = 32767;
+		let n3 = 32767;
+		let n4 = 32767;
+		let n5 = 32767;
+		let n6 = 32767;
+		let n7 = 32767;
+		let n8 = 32767;
+		let n9 = 6000;
+		let t = 0;
+		
+		while(t<duration){
+			while(n1>0) {
+				while(n2>0) { 
+					while(n3>0) { 
+						while(n4>0) { 
+							while(n5>0) {
+								while(n6>0) {
+									while(n7>0) {
+										while(n8>0) {
+											while(n9>0) {
+												let n9 = n9-1;
+											}
+											let n8 = n8-1;
+										}
+										let n7 = n7-1;
+									}
+									let n6 = n6-1;
+								}
+								let n5 = n5-1;
+							}
+							let n4 = n4-1;
+						}
+						let n3 = n3-1;
+					}
+					let n2 = n2 -1; 
+				}
+				let n1 = n1-1;
+			}
+			let t = t+1;
+		}
+		return;
+    }
+
+    /** Displays the given error code in the form "ERR<errorCode>",
+     *  and halts the program's execution. */
+    function void error(int errorCode) {
+    
+		do Output.printString("ERR");
+		do Output.printInt(errorCode);
+		do Sys.halt();
+		return;
+    
+    }
+}

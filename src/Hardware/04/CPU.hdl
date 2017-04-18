@@ -1,0 +1,48 @@
+CHIP CPU {
+
+    IN  inM[16],         // M value input  (M = contents of RAM[A])
+        instruction[16], // Instruction for execution
+        reset;           // Signals whether to re-start the current
+                         // program (reset==1) or continue executing
+                         // the current program (reset==0).
+
+    OUT outM[16],        // M value output
+        writeM,          // Write to M? 
+        addressM[15],    // Address in data memory (of M)
+        pc[15];          // address of next instruction
+
+    PARTS:
+
+	// 'A' register
+	Not(in=instruction[15],out=notins15);
+	Or(a=notins15,b=instruction[5],out=loadA);
+	Mux16(a=instruction,b=ALUout,sel=instruction[15],out=inA);	
+	ARegister(in=inA,load=loadA,out=A);
+	
+	// Only A will recieve unfiltered instruction
+	// Instruction filter
+	Mux16(a[0..15]=false,b=instruction,sel=instruction[15],out[0]=fins0,out[1]=fins1,out[2]=fins2,out[3]=fins3,out[4]=fins4,out[5]=fins5,out[6]=fins6,out[7]=fins7,out[8]=fins8,out[9]=fins9,out[10]=fins10,out[11]=fins11,out[12]=fins12,out[13]=fins13,out[14]=fins14,out[15]=fins15);
+	
+	// 'D' register
+	DRegister(in=ALUout,load=fins4,out=D);
+	
+	// Some identities
+	Identity16(in=ALUout,out=outM);
+	Identity(in=fins3,out=writeM);
+	Identity16to15(in=A,out=addressM);
+	
+	// ALU
+	Mux16(a=A,b=inM,sel=fins12,out=AorM);
+	ALU(x=D,y=AorM,zx=fins11,nx=fins10,zy=fins9,ny=fins8,f=fins7,no=fins6,zr=zr,ng=ng,out=ALUout);
+	
+	// PC
+	And(a=ng,b=fins2,out=negative);
+	And(a=zr,b=fins1,out=zero);
+	Not(in=ng,out=notng);
+	Not(in=zr,out=notzr);
+	And3Way(a=notng,b=notzr,c=fins0,out=positive);
+	Or3Way(a=negative,b=zero,c=positive,out=PCload);
+	PC(in=A,load=PCload,inc=true,reset=reset,out=pcout);
+	Identity16to15(in=pcout,out=pc);
+
+}

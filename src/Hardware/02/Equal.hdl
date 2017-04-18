@@ -1,0 +1,13 @@
+//Equal. Outputs 1 if both inputs are equal. Else 0.
+
+CHIP Equal {
+
+	IN a,b;
+	OUT out;
+	
+	PARTS:
+	
+		Xor(a=a,b=b,out=x);
+		Not(in=x,out=out);
+
+}

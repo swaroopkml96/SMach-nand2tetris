@@ -1,0 +1,45 @@
+class Road
+{
+
+	field int width;
+	constructor Road new(int w)
+	{
+		
+		let width = w;
+		return this;
+	}
+	
+	method void refresh()
+	{
+		
+		do Screen.drawLine((256-(width/2)),0,(256-(width/2)),255);
+		do Screen.drawLine((256+(width/2)),0,(256+(width/2)),255);
+		return;
+	}
+	
+	method boolean playerCanMoveLeft(int px, int py, int pr)
+	{
+		if(px>(256-(width/2)+pr))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	method boolean playerCanMoveRight(int px, int py, int pr)
+	{
+		if(px<(256+(width/2)-pr))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+}
+	
+	

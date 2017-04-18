@@ -1,0 +1,16 @@
+CHIP Mux {
+    IN a, b, sel;
+    OUT out;
+
+    PARTS:
+	// After simplification, Mux(a,b,sel)=ab+a(~b)(~sel)+(~a)b(sel)
+	Not(in=a,out=nota);
+	Not(in=b,out=notb);
+	Not(in=sel,out=notSel);
+	And(a=a,b=b,out=term1);
+	And3Way(a=a,b=notb,c=notSel,out=term2);
+	And3Way(a=nota,b=b,c=sel,out=term3);
+	Or3Way(a=term1,b=term2,c=term3,out=out);
+	
+		
+}
