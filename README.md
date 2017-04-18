@@ -1,7 +1,7 @@
 # SMach-nand2tetris
 Building a computer from scratch
 
-A simulated machine - chips, assembler, Virtual Machine Translator, Compiler and an OS - In Java 
+A simulated machine - Hardware, Assembler, Virtual Machine Translator, Compiler and an OS - Mainly Java 
 
 These are my solutions to the projects in 'The elements of computing systems' or nand2tetris.
 
