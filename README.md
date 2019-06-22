@@ -5,7 +5,7 @@ A simulated machine - Hardware, Assembler, Virtual Machine Translator, Compiler 
 
 We had a lot of fun working on this project, and learned a lot. We've tried very hard to make the code readable.
 
-A quick introduction:  
+### A quick introduction:  
 
 **The Chips** are written in HDL and describe the simulated machine (the HACK platform)  
 **The Assembler** assembles programs in the assembly language described in the book into machine code.  
